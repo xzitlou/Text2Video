@@ -9,9 +9,9 @@ import imageio
 from einops import rearrange
 import cv2
 from PIL import Image
-from annotator.util import resize_image, HWC3
-from annotator.canny import CannyDetector
-from annotator.openpose import OpenposeDetector
+from Text2Video.annotator.util import HWC3
+from Text2Video.annotator.canny import CannyDetector
+from Text2Video.annotator.openpose import OpenposeDetector
 import decord
 # decord.bridge.set_bridge('torch')
 
