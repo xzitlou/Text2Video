@@ -53,9 +53,9 @@ class Model:
             del self.pipe
         torch.cuda.empty_cache()
         gc.collect()
-        safety_checker = kwargs.pop('safety_checker', None)
+        # safety_checker = kwargs.pop('safety_checker', None)
         self.pipe = self.pipe_dict[model_type].from_pretrained(
-            model_id, safety_checker=safety_checker, **kwargs).to(self.device).to(self.dtype)
+            model_id, **kwargs).to(self.device).to(self.dtype)
         self.model_type = model_type
         self.model_name = model_id
 
@@ -374,15 +374,14 @@ class Model:
                            use_motion_field=True,
                            smooth_bg=False,
                            smooth_bg_strength=0.4,
-                           path=None,
-                           requires_safety_checker=True):
+                           path=None):
         print("Module Text2Video")
         if self.model_type != ModelType.Text2Video or model_name != self.model_name:
             print("Model update")
             unet = UNet2DConditionModel.from_pretrained(
                 model_name, subfolder="unet")
             self.set_model(ModelType.Text2Video,
-                           model_id=model_name, unet=unet, requires_safety_checker=requires_safety_checker)
+                           model_id=model_name, unet=unet)
             self.pipe.scheduler = DDIMScheduler.from_config(
                 self.pipe.scheduler.config)
             if use_cf_attn:
