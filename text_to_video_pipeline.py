@@ -494,6 +494,8 @@ class TextToVideoPipeline(StableDiffusionPipeline):
                 image, device, text_embeddings.dtype)
             image = rearrange(image, "b c f h w -> (b f) h w c")
 
+        has_nsfw_concept = True
+
         # Offload last model to CPU
         if hasattr(self, "final_offload_hook") and self.final_offload_hook is not None:
             self.final_offload_hook.offload()

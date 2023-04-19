@@ -53,9 +53,9 @@ class Model:
             del self.pipe
         torch.cuda.empty_cache()
         gc.collect()
-        # safety_checker = kwargs.pop('safety_checker', None)
+        safety_checker = kwargs.pop('safety_checker', None)
         self.pipe = self.pipe_dict[model_type].from_pretrained(
-            model_id, **kwargs).to(self.device).to(self.dtype)
+            model_id, safety_checker=safety_checker, **kwargs).to(self.device).to(self.dtype)
         self.model_type = model_type
         self.model_name = model_id
 
