@@ -44,6 +44,9 @@ class TextToVideoPipeline(StableDiffusionPipeline):
         feature_extractor: CLIPFeatureExtractor,
         requires_safety_checker: bool = True,
     ):
+        if not requires_safety_checker:
+            safety_checker = None
+
         super().__init__(vae, text_encoder, tokenizer, unet, scheduler,
                          safety_checker, feature_extractor, requires_safety_checker)
 
