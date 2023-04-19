@@ -374,14 +374,15 @@ class Model:
                            use_motion_field=True,
                            smooth_bg=False,
                            smooth_bg_strength=0.4,
-                           path=None):
+                           path=None,
+                           safety_checker=True):
         print("Module Text2Video")
         if self.model_type != ModelType.Text2Video or model_name != self.model_name:
             print("Model update")
             unet = UNet2DConditionModel.from_pretrained(
                 model_name, subfolder="unet")
             self.set_model(ModelType.Text2Video,
-                           model_id=model_name, unet=unet)
+                           model_id=model_name, unet=unet, safety_checker=safety_checker)
             self.pipe.scheduler = DDIMScheduler.from_config(
                 self.pipe.scheduler.config)
             if use_cf_attn:
